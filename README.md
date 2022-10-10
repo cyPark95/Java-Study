@@ -17,3 +17,12 @@
 
 - 인터넷 강의
   + [자바 버블버블 게임 만들기](https://www.youtube.com/playlist?list=PL93mKxaRDidGqGOsNQ1DqTwB0xA_ON-nY)
+
+---
+
+## Java 8
+
+#### 자바 8에 추가된 기능 학습
+
+- 인터넷 강의
+  + [더 자바, Java 8](https://www.inflearn.com/course/the-java-java8)
