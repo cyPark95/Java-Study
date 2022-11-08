@@ -1,0 +1,23 @@
+### DS_Strore ###
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+
+### IntelliJ IDEA ###
+target
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
