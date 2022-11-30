@@ -35,3 +35,12 @@
 
 - 인터넷 강의
   + [더 자바, Java 8](https://www.inflearn.com/course/the-java-java8)
+
+---
+
+## Java-Test
+
+#### 애플리케이션을 테스트하는 방법 학습
+
+- 인터넷 강의
+  + [더 자바, 애플리케이션을 테스트하는 다양한 방법](https://www.inflearn.com/course/the-java-application-test)
