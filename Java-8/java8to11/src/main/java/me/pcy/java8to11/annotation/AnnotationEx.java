@@ -1,6 +1,5 @@
 package me.pcy.java8to11.annotation;
 
-import java.lang.annotation.ElementType;
 import java.util.Arrays;
 
 @Chicken("양념")

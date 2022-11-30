@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Api {
+public class StreamEx {
 
     public static void main(String[] args) {
         List<OnlineClass> springClasses = new ArrayList<>();

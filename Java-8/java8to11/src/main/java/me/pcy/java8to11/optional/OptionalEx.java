@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Api {
+public class OptionalEx {
 
     public static void main(String[] args) {
         List<OnlineClass> springClasses = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Api {
         optional.orElse(createNewJpaClass());
 
         // Optional에 값이 있으면 가져오고, 없는경우 메서드 실행
-        optional.orElseGet(Api::createNewJpaClass);
+        optional.orElseGet(OptionalEx::createNewJpaClass);
 
         // Optional에 값이 있으면 가져오고, 없으면 에러 발생
         // 기본적으로 NoSuchElementException 발생
