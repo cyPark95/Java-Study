@@ -20,6 +20,8 @@ class StudyTest {
     @Test
     // 테스트 이름을 표기 설정
     @DisplayName("Study 인스턴스 만들기")
+    // 테스트 그룹 설정
+    @Tag("local")
     void create_new_study() {
         System.out.println("Create!!");
         Study study = new Study(10);
@@ -34,6 +36,7 @@ class StudyTest {
     }
 
     @Test
+    @Tag("dev")
     void createNewStudy_timeout() {
         assertTimeout(Duration.ofMillis(200), () -> {
             new Study(10);
@@ -51,6 +54,7 @@ class StudyTest {
     @EnabledOnJre(JRE.JAVA_11)
     // 환경변수 TEST_ENV가 LOCAL에 매칭되면 테스트 활성화
 //    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
+    @Tag("dev")
     void createNewStudy_assume() {
         String test_env = System.getenv("TEST_ENV");
 
@@ -66,9 +70,10 @@ class StudyTest {
     }
 
     @Test
+    @Tag("dev")
     void createNewStudy_fail_limitLessThen0() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
-        
+
         String message = exception.getMessage();
         assertEquals("limit은 0보다 커야한다.", message);
     }

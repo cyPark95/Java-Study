@@ -2,7 +2,7 @@ package me.pcy.javatest;
 
 public class Study {
 
-    private StudyStatus status;
+    private StudyStatus status = StudyStatus.DRAFT;
 
     private int limit;
 
