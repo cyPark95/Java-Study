@@ -2,6 +2,8 @@ package me.pcy.javatest;
 
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -17,10 +19,34 @@ class StudyTest {
     @DisplayName("Study 인스턴스 만들기")
     void create_new_study() {
         System.out.println("Create!!");
-        Study study = new Study();
-        assertNotNull(study);
+        Study study = new Study(10);
+
+        assertAll(
+                () -> assertNotNull(study),
+                () -> assertTrue(study.getLimit() > 0, "스터디 최대 참석 가능 인원은 0보다 커야 한다."),
+                // 람다 표현식을 사용하면 문자열 연산을 필요한 시점까지 하지 않는다.
+                () -> assertEquals(StudyStatus.DRAFT, study.getStatus(),
+                        () -> "스터디를 처음 만들면 " + StudyStatus.DRAFT + " 상태다.")
+        );
     }
 
+    @Test
+    void createNewStudy_timeout() {
+        assertTimeout(Duration.ofMillis(200), () -> {
+            new Study(10);
+            Thread.sleep(100L);
+        });
+        // ThreadLocal
+    }
+
+    @Test
+    void createNewStudy_fail_limitLessThen0() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
+        
+        String message = exception.getMessage();
+        assertEquals("limit은 0보다 커야한다.", message);
+    }
+    
     @Test
     @Disabled  // 해당 테스트는 제외하고 진행
     void test() {
