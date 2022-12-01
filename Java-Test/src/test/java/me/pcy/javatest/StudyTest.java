@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 /**
  * JUnit 5 부터는 접근제한자에 대한 제약이 없다.
+ * JUnit이 제공하는 어노테이션은 메타 어노테이션으로 사용할 수 있다.
  */
 // 클래스에 적용하면 클래스와 모든 테스트 메서드에 이름표기 전략을 설정한다.
 // 기본 구현체로 ReplaceUnderscores 클래스를 제공한다.
@@ -21,7 +22,7 @@ class StudyTest {
     // 테스트 이름을 표기 설정
     @DisplayName("Study 인스턴스 만들기")
     // 테스트 그룹 설정
-    @Tag("local")
+    @Tag("slow")
     void create_new_study() {
         System.out.println("Create!!");
         Study study = new Study(10);
@@ -35,8 +36,7 @@ class StudyTest {
         );
     }
 
-    @Test
-    @Tag("dev")
+    @SlowTest
     void createNewStudy_timeout() {
         assertTimeout(Duration.ofMillis(200), () -> {
             new Study(10);
@@ -45,7 +45,6 @@ class StudyTest {
         // ThreadLocal
     }
 
-    @Test
     // WINDOWS에서 테스트 활성화
     @EnabledOnOs(OS.WINDOWS)
     // MAC에서 테스트 비활성화
@@ -54,7 +53,7 @@ class StudyTest {
     @EnabledOnJre(JRE.JAVA_11)
     // 환경변수 TEST_ENV가 LOCAL에 매칭되면 테스트 활성화
 //    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
-    @Tag("dev")
+    @FastTest
     void createNewStudy_assume() {
         String test_env = System.getenv("TEST_ENV");
 
@@ -69,8 +68,7 @@ class StudyTest {
         });
     }
 
-    @Test
-    @Tag("dev")
+    @FastTest
     void createNewStudy_fail_limitLessThen0() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new Study(-10));
 

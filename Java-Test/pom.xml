@@ -51,7 +51,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>local</groups>
+                            <groups>slow</groups>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -64,7 +64,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>local | dev</groups>
+                            <groups>fast | slow</groups>
                         </configuration>
                     </plugin>
                 </plugins>
