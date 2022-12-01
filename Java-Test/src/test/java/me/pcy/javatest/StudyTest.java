@@ -1,10 +1,13 @@
 package me.pcy.javatest;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 /**
  * JUnit 5 부터는 접근제한자에 대한 제약이 없다.
@@ -37,6 +40,29 @@ class StudyTest {
             Thread.sleep(100L);
         });
         // ThreadLocal
+    }
+
+    @Test
+    // WINDOWS에서 테스트 활성화
+    @EnabledOnOs(OS.WINDOWS)
+    // MAC에서 테스트 비활성화
+    @DisabledOnOs(OS.MAC)
+    // 자바 11 버전에서 테스트 활성화
+    @EnabledOnJre(JRE.JAVA_11)
+    // 환경변수 TEST_ENV가 LOCAL에 매칭되면 테스트 활성화
+//    @EnabledIfEnvironmentVariable(named = "TEST_ENV", matches = "LOCAL")
+    void createNewStudy_assume() {
+        String test_env = System.getenv("TEST_ENV");
+
+        // 조건에 따라 테스트하기
+        assumingThat("LOCAL".equalsIgnoreCase(test_env), () -> {
+            Study study = new Study(100);
+            assertThat(study.getLimit()).isGreaterThan(0);
+        });
+        assumingThat("DEV".equalsIgnoreCase(test_env), () -> {
+            Study study = new Study(10);
+            assertThat(study.getLimit()).isGreaterThan(10);
+        });
     }
 
     @Test
