@@ -21,6 +21,8 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 /**
  * JUnit 5 부터는 접근제한자에 대한 제약이 없다.
  * JUnit이 제공하는 어노테이션은 메타 어노테이션으로 사용할 수 있다.
+ *
+ * Unit 테스트들은 각각 독립적으로 테스트가 진행되어야 한다.
  */
 // 클래스에 적용하면 클래스와 모든 테스트 메서드에 이름표기 전략을 설정한다.
 // 기본 구현체로 ReplaceUnderscores 클래스를 제공한다.
@@ -30,6 +32,9 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 // 테스트 클래스당 인스턴스를 하나만 만들어 사용한다.
 // BeforeAll, AfterAll 메서드를 static 메서드로 만들지 않아도 된다.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+// 테스트 인스턴스를 새로 만드는 것과 같은 이유로 어떻게 순서를 정하는지는 의도적으로 분명히 하지 않는다.
+// TestMethodOrder 어노테이션을 통해 원하는 순서에 따라 실행하도록 설정할 수 있다.
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StudyTest {
 
     @Test
@@ -132,6 +137,7 @@ class StudyTest {
     @DisplayName("인스턴스 공유 fast")
     // 테스트 그룹 설정
     @Tag("fast")
+    @Order(2)
     void testInstanceFast() {
         System.out.println("value: " + value++);
     }
@@ -141,6 +147,7 @@ class StudyTest {
     @DisplayName("인스턴스 공유 slow")
     // 테스트 그룹 설정
     @Tag("slow")
+    @Order(1)
     void testInstanceSlow() {
         System.out.println("value: " + value++);
     }
