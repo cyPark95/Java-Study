@@ -25,6 +25,11 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 // 클래스에 적용하면 클래스와 모든 테스트 메서드에 이름표기 전략을 설정한다.
 // 기본 구현체로 ReplaceUnderscores 클래스를 제공한다.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+// 테스트 메서드를 독립적으로 싱행하여 예상치 못한 부작용을 방지하기 위해 테스트 마다 테스트 인스턴스를 새로 만든다.
+// JUnit5에서는 이 전략을 변경할 수 있다.
+// 테스트 클래스당 인스턴스를 하나만 만들어 사용한다.
+// BeforeAll, AfterAll 메서드를 static 메서드로 만들지 않아도 된다.
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StudyTest {
 
     @Test
@@ -119,6 +124,26 @@ class StudyTest {
             return new Study(Integer.parseInt(source.toString()));
         }
     }
+
+    int value = 1;
+
+    @Test
+    // 테스트 이름을 표기 설정
+    @DisplayName("인스턴스 공유 fast")
+    // 테스트 그룹 설정
+    @Tag("fast")
+    void testInstanceFast() {
+        System.out.println("value: " + value++);
+    }
+
+    @Test
+    // 테스트 이름을 표기 설정
+    @DisplayName("인스턴스 공유 slow")
+    // 테스트 그룹 설정
+    @Tag("slow")
+    void testInstanceSlow() {
+        System.out.println("value: " + value++);
+    }
     
     @Test
     @Disabled  // 해당 테스트는 제외하고 진행
@@ -126,15 +151,16 @@ class StudyTest {
         System.out.println("Test!!");
     }
 
+    // 반드시 static 메서드여야 한다.
     // 모든 테스트가 실행되기 전 한 번만 실행
     @BeforeAll
-    static void beforeAll() {
+    void beforeAll() {
         System.out.println("Before all");
     }
 
     // 모든 테스트가 실행된 이후 한 번만 실행
     @AfterAll
-    static void afterAll() {
+    void afterAll() {
         System.out.println("After all");
     }
 
