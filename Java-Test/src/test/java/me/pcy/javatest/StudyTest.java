@@ -2,6 +2,15 @@ package me.pcy.javatest;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.aggregator.AggregateWith;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregationException;
+import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
+import org.junit.jupiter.params.converter.ArgumentConversionException;
+import org.junit.jupiter.params.converter.SimpleArgumentConverter;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.Duration;
 
@@ -74,6 +83,41 @@ class StudyTest {
 
         String message = exception.getMessage();
         assertEquals("limit은 0보다 커야한다.", message);
+    }
+
+    @DisplayName("반복 테스트-단순 반복")
+    @RepeatedTest(value = 10, name = "{displayName}, {currentRepetition}/{totalRepetitions}")  // value: 반복 횟수 / name: 이름 설정
+    void repeatTest(RepetitionInfo repetitionInfo) {
+        System.out.println("Repeat Test: " + repetitionInfo.getCurrentRepetition() + " / " + repetitionInfo.getTotalRepetitions());
+    }
+
+    @DisplayName("반복 테스트-다른값")
+    @ParameterizedTest(name = "{index} {displayName} : {0}")
+//    @ValueSource(ints = {10, 20, 40, 80})
+//    @NullAndEmptySource  // @NullSource + @EmptySource
+    @CsvSource({"10, '자바 스터디'", "20, '스프링'", "30, 'JPA'"})
+    void parameterizedTest(@AggregateWith(StudyAggregator.class) Study study) {
+//        Study study = new Study(limit, name);
+        System.out.println(study.getLimit());
+    }
+
+    // 인자 값 조합
+    // 반드시 static inner 클래스 이거나, public 클래스여야 한다.
+    static class StudyAggregator implements ArgumentsAggregator {
+        @Override
+        public Object aggregateArguments(ArgumentsAccessor argumentsAccessor, ParameterContext parameterContext) throws ArgumentsAggregationException {
+            return new Study(argumentsAccessor.getInteger(0), argumentsAccessor.getString(1));
+        }
+    }
+
+    // 명시적 인자 값 타입 변환
+    // 하나의 아규먼트에만 적용되는 컨버터
+    static class StudyConverter extends SimpleArgumentConverter {
+        @Override
+        protected Object convert(Object source, Class<?> targetType) throws ArgumentConversionException {
+            assertEquals(Study.class, targetType, "Can only convert to Study");
+            return new Study(Integer.parseInt(source.toString()));
+        }
     }
     
     @Test
