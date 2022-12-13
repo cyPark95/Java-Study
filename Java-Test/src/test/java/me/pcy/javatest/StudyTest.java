@@ -154,7 +154,7 @@ class StudyTest {
     
     @Test
     @Disabled  // 해당 테스트는 제외하고 진행
-    void test() {
+    void disabledTest() {
         System.out.println("Test!!");
     }
 
