@@ -3,6 +3,7 @@ package me.pcy.javatest;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
@@ -35,7 +36,14 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 // 테스트 인스턴스를 새로 만드는 것과 같은 이유로 어떻게 순서를 정하는지는 의도적으로 분명히 하지 않는다.
 // TestMethodOrder 어노테이션을 통해 원하는 순서에 따라 실행하도록 설정할 수 있다.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
+// 선언적인 등록
+//@ExtendWith(FindSlowTestExtension.class)
 class StudyTest {
+
+    // 프로그래밍 등록
+    @RegisterExtension
+    static FindSlowTestExtension findSlowTestExtension = new FindSlowTestExtension(1000L);
 
     @Test
     // 테스트 이름을 표기 설정
@@ -57,9 +65,9 @@ class StudyTest {
 
     @SlowTest
     void createNewStudy_timeout() {
-        assertTimeout(Duration.ofMillis(200), () -> {
+        assertTimeout(Duration.ofMillis(2000), () -> {
             new Study(10);
-            Thread.sleep(100L);
+            Thread.sleep(1010L);
         });
         // ThreadLocal
     }
