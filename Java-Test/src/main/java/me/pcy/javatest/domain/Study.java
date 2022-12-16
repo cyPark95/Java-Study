@@ -3,6 +3,7 @@ package me.pcy.javatest.domain;
 import me.pcy.javatest.study.StudyStatus;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -11,16 +12,22 @@ public class Study {
     @Id
     @GeneratedValue
     private Long id;
-
     private StudyStatus status = StudyStatus.DRAFT;
 
     private int limit;
 
     private String name;
 
+    private LocalDateTime openedDateTime;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member owner;
+
+    public void open() {
+        openedDateTime = LocalDateTime.now();
+        status = StudyStatus.OPENED;
+    }
 
     protected Study() {
     }
@@ -52,6 +59,10 @@ public class Study {
 
     public Member getOwner() {
         return owner;
+    }
+
+    public LocalDateTime getOpenedDateTime() {
+        return openedDateTime;
     }
 
     public void setOwner(Member member) {
