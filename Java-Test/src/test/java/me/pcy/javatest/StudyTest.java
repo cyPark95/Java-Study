@@ -1,5 +1,7 @@
 package me.pcy.javatest;
 
+import me.pcy.javatest.domain.Study;
+import me.pcy.javatest.study.StudyStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.api.extension.ParameterContext;
