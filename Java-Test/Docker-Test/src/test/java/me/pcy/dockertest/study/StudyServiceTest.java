@@ -3,6 +3,7 @@ package me.pcy.dockertest.study;
 import me.pcy.dockertest.domain.Member;
 import me.pcy.dockertest.domain.Study;
 import me.pcy.dockertest.member.MemberService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
@@ -24,6 +28,7 @@ import static org.mockito.Mockito.times;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
+@Testcontainers
 class StudyServiceTest {
 
     @Mock
@@ -31,6 +36,15 @@ class StudyServiceTest {
     @Autowired
     StudyRepository studyRepository;
 
+    @Container
+    static GenericContainer postgresSQLContainer = new GenericContainer("postgres")
+            .withExposedPorts(5432)
+            .withEnv("POSTGRES_PASSWORD", "studytest");
+
+    @BeforeEach
+    void beforeEach() {
+        studyRepository.deleteAll();
+    }
 
     @Test
     void createNewStudy() {
