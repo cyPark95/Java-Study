@@ -27,7 +27,7 @@ public class Study {
 
     private LocalDateTime openedDateTime;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = ALL)
+    @OneToOne(cascade = ALL)
     @JoinColumn(name = "member_id")
     private Member owner;
 
