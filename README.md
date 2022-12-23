@@ -1,7 +1,5 @@
 # Java-Study
 
----
-
 ## Java-Basic
 
 #### 자바 기초 문법 학습
@@ -44,3 +42,20 @@
 
 - 인터넷 강의
   + [더 자바, 애플리케이션을 테스트하는 다양한 방법](https://www.inflearn.com/course/the-java-application-test)
+
+---
+
+## Gof-Design-Pattern
+
+#### 자바 디자인 패턴 학습
+
+- 인터넷 강의
+  + [자바 디자인 패턴의 이해 - Gof Design Pattern](https://www.inflearn.com/course/%EC%9E%90%EB%B0%94-%EB%94%94%EC%9E%90%EC%9D%B8-%ED%8C%A8%ED%84%B4)
+
+---
+
+## Effective-Java
+
+- 교재
+  + [이펙티브 자바 3/E](https://product.kyobobook.co.kr/detail/S000001033066)
+  + 예제 코드: [Github](https://github.com/WegraLee/effective-java-3e-source-code)
