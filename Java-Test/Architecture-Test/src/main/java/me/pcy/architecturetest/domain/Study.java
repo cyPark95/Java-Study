@@ -1,7 +1,6 @@
 package me.pcy.architecturetest.domain;
 
 import lombok.*;
-import me.pcy.architecturetest.study.StudyStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
