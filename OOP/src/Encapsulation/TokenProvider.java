@@ -7,11 +7,7 @@ public class TokenProvider {
 
         if(mem == null) throw new BadTokenException();
 
-        if (mem.getVerificationEmailStatus() == 2) {
-            throw new AlreadyVerifiedException();
-        } else {
-            mem.setVerificationEmailStatus(2);
-        }
+        mem.verifyEmail();
     }
 
     private static class Member {
@@ -21,6 +17,18 @@ public class TokenProvider {
 
         public Member(String email) {
             this.email = email;
+        }
+
+        public void verifyEmail() {
+            if (verificationEmailStatus == 2) {
+                throw new AlreadyVerifiedException();
+            } else {
+                verificationEmailStatus = 2;
+            }
+        }
+
+        public boolean isEmailVerified() {
+            return verificationEmailStatus == 2;
         }
 
         public int getVerificationEmailStatus() {
