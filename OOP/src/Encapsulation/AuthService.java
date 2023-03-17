@@ -11,7 +11,7 @@ public class AuthService {
 
         if(mem == null) return AuthResult.NO_MATCH;
 
-        if (mem.getVerificationEmailStatus() != 2) {
+        if (mem.isEmailVerified()) {
             return AuthResult.NO_EMAIL_VERIFIED;
         }
 
@@ -27,6 +27,10 @@ public class AuthService {
         private String id;
         private String pw;
         private int verificationEmailStatus;
+
+        public boolean isEmailVerified() {
+            return verificationEmailStatus == 2;
+        }
 
         public String getId() {
             return id;
