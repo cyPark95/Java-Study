@@ -1,4 +1,4 @@
-package Encapsulation;
+package encapsulation;
 
 import java.util.Objects;
 

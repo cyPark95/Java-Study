@@ -1,8 +1,7 @@
-package Encapsulation;
+package encapsulation;
 
 import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 public class StopWatch {
