@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoxService {
-    public InputStream getInputStream(String fileId) {
+    public InputStream getInputStream() {
         return null;
     }
 
