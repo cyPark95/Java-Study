@@ -17,6 +17,8 @@ public class CloudFileManager {
             BoxService boxSvc = new BoxService();
             // ...
             return boxSvc.getFiles();
+        } else if (cloudId == CloudId.SCLOUD) {
+            // ...
         }
 
         return null;
@@ -31,6 +33,8 @@ public class CloudFileManager {
             BoxService boxSvc = new BoxService();
             InputStream in = boxSvc.getInputStream(file.getFileId());
             FileOutputStream out = new FileOutputStream(localTarget);
+        } else if (file.getCloudId() == CloudId.SCLOUD) {
+            // ...
         }
     }
 
@@ -40,12 +44,18 @@ public class CloudFileManager {
             DropBoxClient dbClient = new DropBoxClient();
             if (from == CloudId.BOX) {
                 // ...
+            } else if (from == CloudId.SCLOUD) {
+                // ...
             }
         } else if (to == CloudId.BOX) {
             BoxService boxService = new BoxService();
             if (from == CloudId.DROPBOX) {
                 // ...
+            } else if (from == CloudId.SCLOUD) {
+                // ...
             }
+        } else if (to == CloudId.SCLOUD) {
+            // ...
         }
 
         return null;
