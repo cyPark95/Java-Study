@@ -7,6 +7,8 @@ public class CloudFileSystemFactory {
             return new DropBoxFileSystem();
         } else if (cloudId == CloudId.BOX) {
             return new BoxFileSystem();
+        } else if (cloudId == CloudId.SCLOUD) {
+            return new SCloudFileSystem();
         }
         
         return null;
