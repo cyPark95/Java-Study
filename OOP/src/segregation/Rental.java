@@ -9,20 +9,27 @@ public class Rental {
         return movie.getFrequentRenterPoints(daysRented);
     }
 
-    private static class Movie {
-        public static int REGULAR = 0;
-        public static int NEW_RELEASE = 1;
+    private abstract class Movie {
         private int priceCode;
 
-        public int getFrequentRenterPoints(int daysRented) {
-            if (priceCode == Movie.NEW_RELEASE && daysRented > 1)
-                return 2;
-            else
-                return 1;
-        }
+        public abstract int getFrequentRenterPoints(int daysRented);
 
         public int getPriceCode() {
             return priceCode;
+        }
+    }
+
+    private class NewReleaseMovie extends Movie {
+        @Override
+        public int getFrequentRenterPoints(int daysRented) {
+            return daysRented > 1 ? 2 : 1;
+        }
+    }
+
+    private class RegularMovie extends Movie {
+        @Override
+        public int getFrequentRenterPoints(int daysRented) {
+            return 1;
         }
     }
 }
