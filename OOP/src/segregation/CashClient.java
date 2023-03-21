@@ -1,33 +1,26 @@
 package segregation;
 
-import javax.crypto.Cipher;
-import java.security.Key;
-import java.security.spec.AlgorithmParameterSpec;
-import java.util.Base64;
-
 public class CashClient {
-    private static final String DEFAULT_TRANSFORM = "";
-
-    private SecretKeySpec keySpec;
-    private IvParameterSpec ivSpec;
 
     private RestTemplate restTemplate = new RestTemplate();
     private Object api = null;
 
+    private Cryptor cryptor;
+
+    public CashClient(Cryptor cryptor) {
+        this.cryptor = cryptor;
+    }
+
     private Res post(Req req) throws Exception {
         String reqBody = toJson(req);
 
-        Cipher cipher = Cipher.getInstance(DEFAULT_TRANSFORM);
-        cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
-        String encReqBody = new String(Base64.getEncoder().encode(cipher.doFinal(reqBody.getBytes())));
+        String encReqBody = cryptor.encrypt(reqBody);
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(api, encReqBody, String.class);
 
         String encRespBody = responseEntity.getBody();
 
-        Cipher cipher2 = Cipher.getInstance(DEFAULT_TRANSFORM);
-        cipher2.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
-        String respBody = new String(Base64.getEncoder().encode(cipher.doFinal(reqBody.getBytes())));
+        String respBody = cryptor.decrypt(encRespBody);
 
         return jsonToObj(respBody);
     }
@@ -46,28 +39,6 @@ public class CashClient {
 
     private static class Res {
 
-    }
-
-    private static class IvParameterSpec implements AlgorithmParameterSpec {
-
-    }
-
-    private static class SecretKeySpec implements Key {
-
-        @Override
-        public String getAlgorithm() {
-            return null;
-        }
-
-        @Override
-        public String getFormat() {
-            return null;
-        }
-
-        @Override
-        public byte[] getEncoded() {
-            return new byte[0];
-        }
     }
 
     private static class ResponseEntity<T> {
